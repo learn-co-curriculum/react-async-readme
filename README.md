@@ -52,35 +52,30 @@ is received, we can use `setState` to store the received data. This causes an
 update with that remote data stored in state. A very simple implementation of
 the App component with `fetch` might look like this:
 
-```js
-import React, { Component } from 'react'
+```jsx
+import React, { Component } from "react";
 
 class App extends Component {
-
   state = {
-    peopleInSpace: []
-  }
+    peopleInSpace: [],
+  };
 
   render() {
-    return (
-      <div>
-        {this.state.peopleInSpace.map(person => person.name)}
-      </div>
-    )
+    return <div>{this.state.peopleInSpace.map((person) => person.name)}</div>;
   }
 
   componentDidMount() {
-    fetch('http://api.open-notify.org/astros.json')
-      .then(response => response.json())
-      .then(data => {
+    fetch("http://api.open-notify.org/astros.json")
+      .then((response) => response.json())
+      .then((data) => {
         this.setState({
-          peopleInSpace: data.people
-        })
-      })
+          peopleInSpace: data.people,
+        });
+      });
   }
 }
 
-export default App
+export default App;
 ```
 
 In the code above, once App mounts, a `fetch` is called to an API. Once data is
@@ -100,7 +95,7 @@ to set up any repeating fetch requests here as well.
 We aren't limited to sending fetch requests when a component is mounted. We can
 also tie them into events:
 
-```js
+```jsx
 handleClick = event => {
   fetch('your API url')
     .then(res => res.json())
@@ -133,7 +128,7 @@ expecting two values within the body of the POST, `username` and `password`.
 
 Setting up a React controlled form, we can structure our state in the same way:
 
-```js
+```jsx
 state = {
   username: "",
   password: ""
@@ -159,17 +154,17 @@ render() {
 Then, when setting up the fetch request, we can just pass the entire state within the
 body, as there are no other values:
 
-```js
-handleSubmit = event => {
-  event.preventDefault()
-  fetch('the server URL', {
+```jsx
+handleSubmit = (event) => {
+  event.preventDefault();
+  fetch("the server URL", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(this.state)
-  })
-}
+    body: JSON.stringify(this.state),
+  });
+};
 ```
 
 Notice how we're not bothering to worry about `event.target` when posting the
